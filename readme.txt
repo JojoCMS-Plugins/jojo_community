@@ -1,0 +1,1 @@
+jojo_community provides a registration page and user profile pages. Use with the jojo_forum plugin or any community based site where users need to register to access certain parts of the site.

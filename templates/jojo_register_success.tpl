@@ -1,0 +1,2 @@
+{* This is the success message for newly registered visitors. If you would like to customize, place a copy of this file in YOURTHEME/templates/ and customize the copy. *}
+<p>Your registration was successful, and you are now logged in.</p>
