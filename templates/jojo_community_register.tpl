@@ -43,6 +43,17 @@
 
 {/foreach}
 
+{if $OPTIONS.jojo_community_register_captcha == 'yes'}
+    <br />
+    <td class="col1"><label for="CAPTCHA">Spam prevention:</label></td>
+    <td>
+        Please enter the {$OPTIONS.captcha_num_chars|default:3} letter code in the box below. This helps us prevent spam.<br />
+        <img src="external/php-captcha/visual-captcha.php" width="200" height="60" alt="Visual CAPTCHA" /><br />
+        <em>Code is not case-sensitive</em><br />
+        <input type="text" class="text" size="8" name="CAPTCHA" id="CAPTCHA" value="" />*
+    </td>
+{/if}
+
       </table>
 
       {jojoHook hook="register_bottom"}

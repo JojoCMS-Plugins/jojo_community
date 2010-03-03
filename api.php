@@ -30,3 +30,14 @@ $profileprefix = Jojo_Plugin_Jojo_Community_Profile::_getPrefix('', Jojo::getOpt
 Jojo::registerURI("[action:$profileprefix]/[id:integer]/",                         'Jojo_Plugin_Jojo_Community_Profile');  // "profiles/563/"
 Jojo::registerURI("[action:$profileprefix]/[id:integer]/[string]",                         'Jojo_Plugin_Jojo_Community_Profile');  // "profiles/563/name-of-user/"
 Jojo::registerURI("[action:$profileprefix]/[profilename:string]",                          'Jojo_Plugin_Jojo_Community_Profile');  // "profiles/name-of-user/"
+
+$_options[] = array(
+    'id'          => 'jojo_community_register_captcha',
+    'category'    => 'Security',
+    'label'       => 'Registration form CAPTCHA',
+    'description' => 'Adds a CAPTCHA to the registration form',
+    'type'        => 'radio',
+    'default'     => 'no',
+    'options'     => 'yes,no',
+    'plugin'      => 'jojo_community'
+);

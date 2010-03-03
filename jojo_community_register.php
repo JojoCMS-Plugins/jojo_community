@@ -90,6 +90,13 @@ class Jojo_Plugin_Jojo_Community_Register extends Jojo_Plugin
                         $errors[] = 'The email "' . $table->getFieldValue('us_email') . '" is already in use by another user';
                     }
                 }
+                /* validate CAPTCHA */
+                if (Jojo::getOption('jojo_community_register_captcha') == 'yes') {
+                    $captchacode = Jojo::getFormData('CAPTCHA','');
+                    if (!PhpCaptcha::Validate($captchacode)) {
+                        $errors[] = 'Incorrect Spam Prevention Code entered';
+                    }
+                }
             }
            
             if (!count($errors)) {
