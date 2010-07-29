@@ -21,25 +21,26 @@ class Jojo_Plugin_Jojo_Community_Profile extends Jojo_Plugin
     {
         global $smarty, $_USERID;
         $content = array();
-        
+
         $userid = Jojo::getFormData('id', false);
-        
+
         if (!isset($table)) $table = &Jojo_Table::singleton('user');
         $table->getRecord($userid);
         $fieldsHTML = $table->getHTML('view');
+
         /* Fetch list of tabs from fields */
         $data = Jojo::selectQuery("SELECT fd_tabname AS tabname FROM {fielddata} WHERE fd_table='user' ORDER BY fd_tabname");
-        
+
         /* Build array of tabs from all the fields */
         $tabnames = array();
         foreach ($data as $i => $v) {
             $tabname = $data[$i]['tabname'];
             $tabnames[$tabname]['tabname'] = $tabname;
         }
-    
+
         /* Sort the tabs */
         ksort($tabnames);
-        
+
         /* Let smarty know about the tab names */
         $_tabnames = array_values($tabnames);
         $smarty->assign('tabnames', $_tabnames);
@@ -49,7 +50,7 @@ class Jojo_Plugin_Jojo_Community_Profile extends Jojo_Plugin
         $smarty->assign('profileprefix', self::_getPrefix());
         $smarty->assign('editprofileprefix', self::_getPrefix('editprofile'));
         $smarty->assign('thisuser', ($userid==$_USERID ? true : false));
-        
+
         $content['title']     = 'User profile: ' . $table->getFieldValue('us_login');
         $content['seotitle']  = 'User profile: ' . $table->getFieldValue('us_login');
         $content['content']   = $smarty->fetch('jojo_community_profile.tpl');
@@ -72,9 +73,9 @@ class Jojo_Plugin_Jojo_Community_Profile extends Jojo_Plugin
         $plugin =  ($for = 'editprofiles') ? 'Jojo_Plugin_Jojo_Community_Edit_profile' : 'jojo_plugin_jojo_community_profile';
         $language = !empty($language) ? $language : Jojo::getOption('multilanguage-default', 'en');
         $query = "SELECT pageid, pg_title, pg_url FROM {page} WHERE pg_link = ?";
-        $query .= (_MULTILANGUAGE) ? " AND pg_language = '$language'" : '';        
+        $query .= (_MULTILANGUAGE) ? " AND pg_language = '$language'" : '';
         $res = Jojo::selectRow($query, array($plugin));
- 
+
         if ($res) {
             $_cache[$cacheKey] = !empty($res['pg_url']) ? $res['pg_url'] : $res['pageid'] . '/' . strtolower($res['pg_title']);
         } else {
@@ -82,11 +83,16 @@ class Jojo_Plugin_Jojo_Community_Profile extends Jojo_Plugin
         }
         return $_cache[$cacheKey];
     }
-   
+
 
     function getCorrectUrl()
     {
-        return _PROTOCOL.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+        $userid = Jojo::getFormData('id', false);
+        if (!$userid || !$user = Jojo::selectRow('SELECT userid, us_login FROM {user} WHERE userid = ?', $userid)) {
+            include(_BASEPLUGINDIR . '/jojo_core/404.php');
+            exit;
+        }
+        return _SITEURL . '/' . Jojo::rewrite('user-profile', $user['userid'], $user['us_login'], '');
     }
 
 }
