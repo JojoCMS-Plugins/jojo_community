@@ -16,7 +16,7 @@
       {foreach from=$fields key=fieldname item=field}
       {if $field.tabname == $tab.tabname}
           {if $field.flags.PROFILE}
-              {if $field.error}<tr class="error">{else}<tr class="{if $field.type=='hidden' || $field.type=='privacy'}hidden {/if}{$field.mode}">{/if}
+              {if $field.error}<tr class="error">{else}<tr class="{if $field.type=='hidden' || $field.type=='privacy'}hidden {/if}{tif $field.mode $field.mode ''}">{/if}
               {if $field.type=='texteditor' ||  $field.type=='wysiwygeditor' || $field.type=='bbeditor' || $field.showlabel=='no'}
               <td class="col2" colspan="2" id="wrap_{$fieldname}">
               {else}
@@ -38,7 +38,7 @@
 
       </table>
 <label for="submit"></label><input class="button" type="submit" name="update" id="submit" value="Update Profile" />
-	  <div class="clear"></div>
+      <div class="clear"></div>
 </div>
 </form>
 
