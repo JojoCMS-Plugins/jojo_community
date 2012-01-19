@@ -159,8 +159,9 @@ class Jojo_Plugin_Jojo_Community_Register extends Jojo_Plugin
                     $email .= _SITEURL . '/register/delete/' . $deletecode . "/\n";    
                     $email .= Jojo::emailFooter();
     
-                    /* Email notification to webmaster */
+                    /* Email notification to webmaster + admin person*/
                     Jojo::simplemail(_WEBMASTERNAME, _WEBMASTERADDRESS, 'User Registration - ' . _SITETITLE, $email);
+                    Jojo::simplemail(_CONTACTADDRESS, _FROMNAME, 'User Registration - ' . _SITETITLE, $email);
     
                     if ($redirect) {
                         Jojo::redirect(_SITEURL . '/' . $redirect, 302);
