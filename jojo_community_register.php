@@ -161,7 +161,7 @@ class Jojo_Plugin_Jojo_Community_Register extends Jojo_Plugin
     
                     /* Email notification to webmaster + admin person*/
                     Jojo::simplemail(_WEBMASTERNAME, _WEBMASTERADDRESS, 'User Registration - ' . _SITETITLE, $email);
-                    Jojo::simplemail(_CONTACTADDRESS, _FROMNAME, 'User Registration - ' . _SITETITLE, $email);
+                    Jojo::simplemail(_FROMNAME, _CONTACTADDRESS, 'User Registration - ' . _SITETITLE, $email);
     
                     if ($redirect) {
                         Jojo::redirect(_SITEURL . '/' . $redirect, 302);
