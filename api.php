@@ -41,3 +41,14 @@ $_options[] = array(
     'options'     => 'yes,no',
     'plugin'      => 'jojo_community'
 );
+
+$_options[] = array(
+    'id'          => 'jojo_community_public_profile',
+    'category'    => 'Security',
+    'label'       => 'Use public profiles',
+    'description' => 'Registered users have a public profile page',
+    'type'        => 'radio',
+    'default'     => 'yes',
+    'options'     => 'yes,no',
+    'plugin'      => 'jojo_community'
+);

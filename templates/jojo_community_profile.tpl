@@ -1,3 +1,4 @@
+{if $OPTIONS.jojo_community_public_profile == 'yes'}
 {jojoHook hook="profile_top"}
 {if $loggedIn && $thisuser}<p>Edit your <a href="{$editprofileprefix}/">user profile</a>.</p>{/if}
     <table>
@@ -27,3 +28,6 @@
       </table>
 
 {jojoHook hook="profile_bottom"}
+{else}
+<p>User profiles have been disabled.</p>
+{/if}
