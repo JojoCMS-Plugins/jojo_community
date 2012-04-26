@@ -63,7 +63,8 @@ class Jojo_Plugin_Jojo_community_edit_profile extends Jojo_Plugin
                     Jojo::runHook('edit_profile_save_error');
                 } else {
                     /* success */
-                    $message = 'Your user profile has been updated. View your <a href="' . $public_uri . '">public profile</a>.';
+                    $message = 'Your user profile has been updated.';
+                    if (Jojo::getOption('jojo_community_public_profile', 'no') == 'yes') $message .= ' View your <a href="' . $public_uri . '">public profile</a>.';
                     Jojo::runHook('edit_profile_save_success');
                 }
                 
