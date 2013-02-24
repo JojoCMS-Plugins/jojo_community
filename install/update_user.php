@@ -89,6 +89,7 @@ $default_fd[$table][$field]['fd_order']          = $o++;
 $default_fd[$table][$field]['fd_type']           = 'url';
 $default_fd[$table][$field]['fd_help']           = '';
 $default_fd[$table][$field]['fd_flags']          = 'REGISTER,PROFILE';
+$default_fd[$table][$field]['fd_tabname']        = 'Base';
 
 /* Location */
 $field = 'us_location';
@@ -97,6 +98,7 @@ $default_fd[$table][$field]['fd_type']           = 'text';
 $default_fd[$table][$field]['fd_size']           = '40';
 $default_fd[$table][$field]['fd_help']           = '';
 $default_fd[$table][$field]['fd_flags']          = 'PROFILE,PRIVACY';
+$default_fd[$table][$field]['fd_tabname']        = 'Base';
 
 /* Timezone */
 $field = 'us_timezone';
@@ -115,7 +117,7 @@ $default_fd[$table][$field]['fd_m2m_linktable']  = 'usergroup_membership';
 $default_fd[$table][$field]['fd_m2m_linkitemid'] = 'userid';
 $default_fd[$table][$field]['fd_m2m_linkcatid']  = 'groupid';
 $default_fd[$table][$field]['fd_m2m_cattable']   = 'usergroups';
-$default_fd[$table][$field]['fd_tabname']        = '';
+$default_fd[$table][$field]['fd_tabname']        = 'Base';
 
 
 /* ADDRESS TAB */
@@ -495,7 +497,7 @@ $default_fd[$table][$field]['fd_help']            = '';
 $default_fd[$table][$field]['fd_tabname']         = 'Technical';
 
 /* Delete Code */
-$field = '';
+$field = 'us_deletecode';
 $default_fd[$table][$field]['fd_order']           = $o++;
 $default_fd[$table][$field]['fd_type']            = 'hidden';
 $default_fd[$table][$field]['fd_showlabel']       = '0';
@@ -503,7 +505,7 @@ $default_fd[$table][$field]['fd_help']            = '';
 $default_fd[$table][$field]['fd_tabname']         = 'Technical';
 
 /* Salt */
-$field = '';
+$field = 'us_salt';
 $default_fd[$table][$field]['fd_order']           = $o++;
 $default_fd[$table][$field]['fd_type']            = 'hidden';
 $default_fd[$table][$field]['fd_showlabel']       = '0';
@@ -511,7 +513,7 @@ $default_fd[$table][$field]['fd_help']            = '';
 $default_fd[$table][$field]['fd_tabname']         = 'Technical';
 
 /* NoIndex */
-$field = '';
+$field = 'us_status';
 $default_fd[$table][$field]['fd_order']           = $o++;
 $default_fd[$table][$field]['fd_type']            = 'radio';
 $default_fd[$table][$field]['fd_options']         = "active\ninactive";
