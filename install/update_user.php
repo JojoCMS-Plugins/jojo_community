@@ -120,8 +120,28 @@ $default_fd[$table][$field]['fd_m2m_cattable']   = 'usergroups';
 $default_fd[$table][$field]['fd_tabname']        = 'Base';
 
 
-/* ADDRESS TAB */
-$o = 1;
+/* Contact TAB */
+$o = 0;
+
+/* Phone */
+$field = 'us_phone';
+$default_fd[$table][$field]['fd_order']          = $o++;
+$default_fd[$table][$field]['fd_type']           = 'text';
+$default_fd[$table][$field]['fd_required']       = 'no';
+$default_fd[$table][$field]['fd_size']           = '30';
+$default_fd[$table][$field]['fd_help']           = '';
+$default_fd[$table][$field]['fd_tabname']        = 'Contact';
+$default_fd[$table][$field]['fd_flags']          = 'PROFILE,PRIVACY,PRIVATE';
+
+/* Phone */
+$field = 'us_company';
+$default_fd[$table][$field]['fd_order']          = $o++;
+$default_fd[$table][$field]['fd_type']           = 'text';
+$default_fd[$table][$field]['fd_required']       = 'no';
+$default_fd[$table][$field]['fd_size']           = '30';
+$default_fd[$table][$field]['fd_help']           = '';
+$default_fd[$table][$field]['fd_tabname']        = 'Contact';
+$default_fd[$table][$field]['fd_flags']          = 'PROFILE,PRIVACY,PRIVATE';
 
 /* Address 1 */
 $field = 'us_address1';
@@ -130,7 +150,7 @@ $default_fd[$table][$field]['fd_type']           = 'text';
 $default_fd[$table][$field]['fd_required']       = 'no';
 $default_fd[$table][$field]['fd_size']           = '30';
 $default_fd[$table][$field]['fd_help']           = '';
-$default_fd[$table][$field]['fd_tabname']        = 'Address';
+$default_fd[$table][$field]['fd_tabname']        = 'Contact';
 $default_fd[$table][$field]['fd_flags']          = 'PROFILE,PRIVACY,PRIVATE';
 
 /* Address 2 */
@@ -140,7 +160,17 @@ $default_fd[$table][$field]['fd_type']           = 'text';
 $default_fd[$table][$field]['fd_required']       = 'no';
 $default_fd[$table][$field]['fd_size']           = '30';
 $default_fd[$table][$field]['fd_help']           = '';
-$default_fd[$table][$field]['fd_tabname']        = 'Address';
+$default_fd[$table][$field]['fd_tabname']        = 'Contact';
+$default_fd[$table][$field]['fd_flags']          = 'PROFILE,PRIVACY,PRIVATE';
+
+/* Address 2 */
+$field = 'us_address3';
+$default_fd[$table][$field]['fd_order']          = $o++;
+$default_fd[$table][$field]['fd_type']           = 'text';
+$default_fd[$table][$field]['fd_required']       = 'no';
+$default_fd[$table][$field]['fd_size']           = '30';
+$default_fd[$table][$field]['fd_help']           = '';
+$default_fd[$table][$field]['fd_tabname']        = 'Contact';
 $default_fd[$table][$field]['fd_flags']          = 'PROFILE,PRIVACY,PRIVATE';
 
 /* Suburb */
@@ -150,7 +180,7 @@ $default_fd[$table][$field]['fd_type']           = 'text';
 $default_fd[$table][$field]['fd_required']       = 'no';
 $default_fd[$table][$field]['fd_size']           = '30';
 $default_fd[$table][$field]['fd_help']           = '';
-$default_fd[$table][$field]['fd_tabname']        = 'Address';
+$default_fd[$table][$field]['fd_tabname']        = 'Contact';
 $default_fd[$table][$field]['fd_flags']          = 'PROFILE,PRIVACY,PRIVATE';
 
 /* City */
@@ -160,7 +190,7 @@ $default_fd[$table][$field]['fd_type']           = 'text';
 $default_fd[$table][$field]['fd_required']       = 'no';
 $default_fd[$table][$field]['fd_size']           = '30';
 $default_fd[$table][$field]['fd_help']           = '';
-$default_fd[$table][$field]['fd_tabname']        = 'Address';
+$default_fd[$table][$field]['fd_tabname']        = 'Contact';
 $default_fd[$table][$field]['fd_flags']          = 'PROFILE,PRIVACY';
 
 /* State */
@@ -171,7 +201,7 @@ $default_fd[$table][$field]['fd_type']           = 'text';
 $default_fd[$table][$field]['fd_required']       = 'no';
 $default_fd[$table][$field]['fd_size']           = '30';
 $default_fd[$table][$field]['fd_help']           = '';
-$default_fd[$table][$field]['fd_tabname']        = 'Address';
+$default_fd[$table][$field]['fd_tabname']        = 'Contact';
 $default_fd[$table][$field]['fd_flags']          = 'PROFILE,PRIVACY';
 
 /* Postcode */
@@ -181,7 +211,7 @@ $default_fd[$table][$field]['fd_type']           = 'text';
 $default_fd[$table][$field]['fd_required']       = 'no';
 $default_fd[$table][$field]['fd_size']           = '10';
 $default_fd[$table][$field]['fd_help']           = '';
-$default_fd[$table][$field]['fd_tabname']        = 'Address';
+$default_fd[$table][$field]['fd_tabname']        = 'Contact';
 $default_fd[$table][$field]['fd_flags']          = 'PROFILE,PRIVACY,PRIVATE';
 
 /* Country */
@@ -192,7 +222,7 @@ $default_fd[$table][$field]['fd_name']           = 'Country';
 $default_fd[$table][$field]['fd_required']       = 'no';
 $default_fd[$table][$field]['fd_size']           = '2';
 $default_fd[$table][$field]['fd_help']           = 'A 2 letter code representing the country, eg US, UK, NZ, CN, DE etc';
-$default_fd[$table][$field]['fd_tabname']        = 'Address';
+$default_fd[$table][$field]['fd_tabname']        = 'Contact';
 $default_fd[$table][$field]['fd_flags']          = 'PROFILE,PRIVACY';
 $default_fd[$table][$field]['fd_options']        =
 "AF:Afghanistan
@@ -437,7 +467,6 @@ YU:Yugoslavia
 ZR:Zaire
 ZM:Zambia
 ZW:Zimbabwe";
-
 
 /* TECHNICAL TAB
 $o = 1;
