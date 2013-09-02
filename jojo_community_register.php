@@ -66,10 +66,11 @@ class Jojo_Plugin_Jojo_Community_Register extends Jojo_Plugin
             
             /* Retrieve all values from form and set the field values */
             foreach ($table->getFieldNames() as $fieldname) {
-                if (Jojo::getFormData('fm_' . $fieldname, false) !== false) {
+                $f = $table->getField($fieldname);
+                if ($f->fd_flags["REGISTER"] && Jojo::getFormData('fm_' . $fieldname, false) !== false) {
                     $table->setFieldValue($fieldname, Jojo::getFormData('fm_' . $fieldname));
                 }
-            }            
+            }
             /* Check for errors */
             $errors = $table->fieldErrors();
             if (is_array($errors) && count($errors)) {
