@@ -36,7 +36,6 @@ class Jojo_Plugin_Jojo_community_edit_profile extends Jojo_Plugin
             
             /* Retrieve all values from form and set the field values */
             foreach ($table->getFieldNames() as $fieldname) {
-                
                 $f = $table->getField($fieldname);
                 if ($f->fd_flags["PROFILE"] && Jojo::getFormData('fm_' . $fieldname, false) !== false) {
                     $table->setFieldValue($fieldname, Jojo::getFormData('fm_' . $fieldname));
@@ -56,7 +55,9 @@ class Jojo_Plugin_Jojo_community_edit_profile extends Jojo_Plugin
 
             /* no errors */
             if (!count($errors)) {
+
                 /* save the record */
+                Jojo::runHook('edit_profile_before_save');
                 $res = $table->saveRecord();
                 
                 if ($res === false) {

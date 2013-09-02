@@ -61,9 +61,9 @@ class Jojo_Plugin_Jojo_Community_Register extends Jojo_Plugin
         /* register button pressed */
         $message = '';
         if (isset($_POST['submit'])) {
-            
+
             $table = &Jojo_Table::singleton('user');
-            
+
             /* Retrieve all values from form and set the field values */
             foreach ($table->getFieldNames() as $fieldname) {
                 $f = $table->getField($fieldname);
@@ -74,9 +74,9 @@ class Jojo_Plugin_Jojo_Community_Register extends Jojo_Plugin
             /* Check for errors */
             $errors = $table->fieldErrors();
             if (is_array($errors) && count($errors)) {
-                
+
             } else {
-            
+
                 /* additional error checking */
                 $errors = array();
                 /* Check user does not already exist */
@@ -99,23 +99,23 @@ class Jojo_Plugin_Jojo_Community_Register extends Jojo_Plugin
                     }
                 }
             }
-           
+
             if (!count($errors)) {
                 $approvecode = Jojo::randomString(16);
                 $deletecode  = Jojo::randomString(16);
-                
+
                 $table->setFieldValue('us_approvecode', $approvecode);
                 $table->setFieldValue('us_deletecode',  $deletecode);
-                
+
                 /* save the record */
                 $res = $table->saveRecord();
-                
+
                 if ($res === false) {
                     /* save failed */
                 } else {
                     /* save successful */
                     $userid = $table->getRecordID();
-                    
+
                     /* add the new user to the default group specified in Options */
                     $defaultgroup = Jojo::getOption('defaultgroup');
                     if ($defaultgroup != '') {
@@ -123,7 +123,7 @@ class Jojo_Plugin_Jojo_Community_Register extends Jojo_Plugin
                     }
                     $message = 'Your registration was successful.';
                     $smarty->assign('success', true);
-                    
+
                     /* log them in */
                     $_USERID = $userid;
                     $_SESSION['userid'] = $_USERID;
@@ -138,15 +138,15 @@ class Jojo_Plugin_Jojo_Community_Register extends Jojo_Plugin
                     $emailaddress = $table->getFieldValue('us_email');
                     $firstname = $table->getFieldValue('us_firstname');
                     $lastname = $table->getFieldValue('us_lastname');
-                    
+
                     /* allow plugins to add code here */
                     Jojo::runHook('register_complete');
-                    
+
                     /* email the admin some links for adding the new user into additional groups */
                     $email  = "A new User has registered on " . _SITEURL . "\n\n";
                     $email .= "Username: " . $username . ($firstname ? ' - ' . $firstname : '') . ($lastname ? " " . $lastname : '') . "\n";
                     $email .= $emailaddress != '' ? "Email: " . $emailaddress . "\n" : '';
-    
+
                     /* provide links for adding the user into each group */
                     $allgroups = Jojo::selectQuery("SELECT * FROM {usergroups} WHERE groupid!='notloggedin' ORDER BY groupid");
                     foreach ($allgroups as $g) {
@@ -159,24 +159,24 @@ class Jojo_Plugin_Jojo_Community_Register extends Jojo_Plugin
                     $email .= "\nTo DELETE this User, click the following link\n";
                     $email .= _SITEURL . '/register/delete/' . $deletecode . "/\n";    
                     $email .= Jojo::emailFooter();
-    
+
                     /* Email notification to webmaster + admin person*/
                     Jojo::simplemail(_WEBMASTERNAME, _WEBMASTERADDRESS, 'User Registration - ' . _SITETITLE, $email);
                     Jojo::simplemail(_FROMNAME, _CONTACTADDRESS, 'User Registration - ' . _SITETITLE, $email);
-    
+
                     if ($redirect) {
                         Jojo::redirect(_SITEURL . '/' . $redirect, 302);
                     }
                 }
             }
         }
-        
+
         $smarty->assign('errors', $errors);
-        
+
         if (!isset($table)) $table = &Jojo_Table::singleton('user');
-        
+
         $fieldsHTML = $table->getHTML('edit');
-        
+
         foreach ($fieldsHTML as $f) {
             if ($f['type'] == 'bbeditor') {
                 $smarty->assign('includebbeditor', true);
@@ -189,25 +189,25 @@ class Jojo_Plugin_Jojo_Community_Register extends Jojo_Plugin
         }
 
         $content['head']= $smarty->fetch('external/date_input_head.tpl');
-        
+
         /* Fetch list of tabs from fields */
         $data = Jojo::selectQuery("SELECT fd_tabname AS tabname FROM {fielddata} WHERE fd_table='user' ORDER BY fd_tabname");
-        
+
         /* Build array of tabs from all the fields */
         $tabnames = array();
         foreach ($data as $i => $v) {
             $tabname = $data[$i]['tabname'];
             $tabnames[$tabname]['tabname'] = $tabname;
         }
-    
+
         /* Sort the tabs */
         ksort($tabnames);
-        
+
         /* Let smarty know about the tab names */
         $_tabnames = array_values($tabnames);
         $smarty->assign('tabnames', $_tabnames);
         $smarty->assign('numtabs', count($tabnames));
-        
+
         $smarty->assign('fields', $fieldsHTML);
 
         $smarty->assign('redirect', $redirect);
