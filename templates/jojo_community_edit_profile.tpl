@@ -1,47 +1,29 @@
-{if $error}<div class="error">{$error}</div>{/if}
+{if $error}<div class="error text-danger">{$error}</div>{/if}
 {if $message}<div class="message">{$message}</div>{/if}
 
-<form method="post" action="" enctype="multipart/form-data">
-<div class="register-form">
+<form id="register-form" method="post" action="" enctype="multipart/form-data" class="contact-form no-ajax" role="form">
 
-  <table>
-      <tr>
-        <th>&nbsp;</th>
-        <th>&nbsp;</th>
-        {if $OPTIONS.jojo_community_public_profile == 'yes'}<th>Keep<br />private?</th>{/if}
-      </tr>
 
-{foreach from=$tabnames item=tab}
-
-      {foreach from=$fields key=fieldname item=field}
-      {if $field.tabname == $tab.tabname}
-          {if $field.flags.PROFILE}
-              {if $field.error}<tr class="error">{else}<tr class="{if $field.type=='hidden' || $field.type=='privacy'}hidden {/if}{tif $field.mode $field.mode ''}">{/if}
-              {if $field.type=='texteditor' ||  $field.type=='wysiwygeditor' || $field.type=='bbeditor' || $field.showlabel=='no'}
-              <td class="col2" colspan="2" id="wrap_{$fieldname}">
-              {else}
-              <td class="col1">{if $field.type=='permissions'}{$field.name}:{else}<label for="fm_{$fieldname}">{$field.name}:</label>{/if}</td>
-              <td class="col2" title="{$field.help|replace:"\"":""}" id="wrap_{$fieldname}">
-              {/if}
-                  {$field.html}
-                  {if $field.error}<img src="images/cms/icons/error.png" border="0" alt="Error: {$field.error}"  title="Error: {$field.error}" />{/if}
-                  {if $field.required=="yes"} <img src="images/cms/icons/star.png" title="Required Field" alt="" />{/if}
-              </td>
-              {if $OPTIONS.jojo_community_public_profile == 'yes'}
-              <td>{if $field.flags.PRIVACY}<input type="hidden" name="hasprivacy[{$fieldname}]" value="1" /><input type="checkbox" name="privacy[{$fieldname}]" id="privacy_{$fieldname}" value="Y"{if $field.privacy=='y' || $field.privacy=='Y'} checked="checked"{/if} />{else}&nbsp;{/if}</td>
-              {/if}
-              </tr>
+    {foreach from=$tabnames item=tab}{foreach from=$fields key=fieldname item=field}
+    {if $field.tabname == $tab.tabname && $field.flags.PROFILE}
+    <div id="wrap_{$fieldname}" class="form-group{if $field.error} has-error{/if}{if $field.type=='hidden' || $field.type=='privacy'} hidden{/if}" >
+          {if $field.type=='permissions'}{$field.name}:
+          {elseif !($field.type=='texteditor' ||  $field.type=='wysiwygeditor' || $field.type=='bbeditor' || $field.showlabel=='no')}<label for="fm_{$fieldname}" class="control-label">{$field.name}{if $field.required=='yes'} <span class="required">*</span>{/if}</label>
           {/if}
+          {if $OPTIONS.jojo_community_public_profile == 'yes' && $field.flags.PRIVACY}<div class="input-group">{/if}
+         {$field.html}
+          {if $OPTIONS.jojo_community_public_profile == 'yes' && $field.flags.PRIVACY}
+          <span class="input-group-addon"><label><input type="checkbox" name="privacy[{$fieldname}]" id="privacy_{$fieldname}" value="Y"{if $field.privacy=='y' || $field.privacy=='Y'} checked="checked"{/if} /> private</label></span>
+          </div>
+          <input type="hidden" name="hasprivacy[{$fieldname}]" value="1" />
+          {/if}
+    </div>
+    {/if}
+    {/foreach}{/foreach}
 
-      {/if}
-      {/foreach}
-
-{/foreach}
-
-      </table>
-<label for="submit"></label><input class="button" type="submit" name="update" id="submit" value="Update Profile" />
-      <div class="clear"></div>
-</div>
+   <div class="form-group submit">
+        <button type="submit" name="update" id="submit" value="Update Profile" class="btn btn-primary" >Update Profile</button>
+   </div>
 </form>
 
 <h3>Change Password</h3>
