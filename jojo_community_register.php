@@ -93,11 +93,33 @@ class Jojo_Plugin_Jojo_Community_Register extends Jojo_Plugin
                 }
                 /* validate CAPTCHA */
                 if (Jojo::getOption('jojo_community_register_captcha') == 'yes') {
-                    $captchacode = Jojo::getFormData('CAPTCHA','');
-                    if (!PhpCaptcha::Validate($captchacode)) {
-                        $errors[] = 'Incorrect Spam Prevention Code entered';
+                    if (Jojo::getOption('captcha_recaptcha', 'no')=='yes') {
+                       $captcharesponse = Jojo::getFormData('g-recaptcha-response','');
+                       $secretkey = Jojo::getOption('captcha_secretkey', '');
+                       $url = 'https://www.google.com/recaptcha/api/siteverify';
+                        $data = array('secret' => $secretkey, 'response' => $captcharesponse);
+                        // use key 'http' even if you send the request to https://...
+                        $options = array(
+                            'http' => array(
+                                'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+                                'method'  => 'POST',
+                                'content' => http_build_query($data),
+                            ),
+                        );
+                        $context  = stream_context_create($options);
+                        $result = json_decode(file_get_contents($url, false, $context), true);
+                       if (!$result['success']) {
+                            $errors[] = 'Incorrect Spam Prevention Code entered';
+                        }
+                    } else {
+                        $captchacode = Jojo::getFormData('CAPTCHA','');
+                        if (!PhpCaptcha::Validate($captchacode)) {
+                            $errors[] = 'Incorrect Spam Prevention Code entered';
+                        }
+
                     }
                 }
+
             }
 
             if (!count($errors)) {
@@ -188,7 +210,7 @@ class Jojo_Plugin_Jojo_Community_Register extends Jojo_Plugin
             if (!empty($f['js'])) $content['javascript'] .= "\n".$f['js'];
         }
 
-        $content['head']= $smarty->fetch('external/date_input_head.tpl');
+        //$content['head']= $smarty->fetch('external/date_input_head.tpl');
 
         /* Fetch list of tabs from fields */
         $data = Jojo::selectQuery("SELECT fd_tabname AS tabname FROM {fielddata} WHERE fd_table='user' ORDER BY fd_tabname");
